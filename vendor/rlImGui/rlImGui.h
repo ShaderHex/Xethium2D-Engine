@@ -146,6 +146,8 @@ RLIMGUIAPI void rlImGuiImageSize(const Texture *image, int width, int height);
 /// <param name="size">The size of drawn image</param>
 RLIMGUIAPI void rlImGuiImageSizeV(const Texture* image, Vector2 size);
 
+RLIMGUIAPI void rlImGuiImageSizeVFlip(const Texture* image, Vector2 size);
+
 /// <summary>
 /// Draw a portion texture as an image in an ImGui Context at a defined size
 /// Uses the current ImGui Cursor position and the specified size

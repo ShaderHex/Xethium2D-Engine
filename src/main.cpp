@@ -1,13 +1,13 @@
 #include <iostream>
 
 #include "raylib.h"
-#include "include/ECS/entityManager.h"
-#include "include/ECS/componentStorage.h"
-#include "include/Engine/XEngine.h"
-#include "include/Scene/Scene.h"
-#include "include/Input/keycode.h"
-#include "include/Audio/audio.h"
-#include "include/CollisionSystem/collisionSystem.h"
+#include "XEngine/ECS/entityManager.h"
+#include "XEngine/ECS/componentStorage.h"
+#include "XEngine/Engine/XEngine.h"
+#include "XEngine/Scene/Scene.h"
+#include "XEngine/Input/keycode.h"
+#include "XEngine/Audio/audio.h"
+#include "XEngine/CollisionSystem/collisionSystem.h"
 
 Sound coin_click;
 Music country;

@@ -589,6 +589,22 @@ void rlImGuiImageSizeV(const Texture* image, Vector2 size)
     ImGui::Image(ImTextureID(image->id), ImVec2(size.x, size.y));
 }
 
+void rlImGuiImageSizeVFlip(const Texture* image, Vector2 size)
+{
+    if (!image)
+        return;
+
+    if (GlobalContext)
+        ImGui::SetCurrentContext(GlobalContext);
+
+    ImGui::Image(
+        ImTextureID(image->id),
+        ImVec2(size.x, size.y),
+        ImVec2(0, 1),
+        ImVec2(1, 0) 
+    );
+}
+
 void rlImGuiImageRect(const Texture* image, int destWidth, int destHeight, Rectangle sourceRect)
 {
     if (!image)
