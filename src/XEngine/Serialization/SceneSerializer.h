@@ -17,6 +17,7 @@ public:
 
         if (!file.is_open()) {
             std::cout << "Failed to open file and save\n";
+            return;
         }
 
         json sceneData = json::object();
