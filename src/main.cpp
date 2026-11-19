@@ -38,6 +38,7 @@ public:
 
         SpriteComponent sprite_entity;
         sprite_entity.texture = m_assetManager.LoadTexture("scarfy.png");
+        sprite_entity.texturePath = "scarfy.png";
         m_ecsManager.AddComponent<SpriteComponent>(entity, sprite_entity);
         
         // Animated sprite
@@ -183,6 +184,8 @@ int main(void)
     
     engine.m_inputManager.CreateAction("right", X_KEY_D);
     engine.m_inputManager.CreateAction("left", X_KEY_A);
+
+    engine.m_sceneSerializer.SerializeScene(testScene, "Test.scene");
 
     engine.Run();
 

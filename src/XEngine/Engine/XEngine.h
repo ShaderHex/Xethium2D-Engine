@@ -9,6 +9,7 @@
 #include "../Audio/audio.h"
 #include "../CollisionSystem/collisionSystem.h"
 #include "../AnimationSystem/animationSystem.h"
+#include "../Serialization/SceneSerializer.h"
 #include "../../vendor/nlohmann/json/json.hpp"
 
 #include "rlImGui.h"
@@ -146,7 +147,7 @@ public:
             DrawScaledRenderTexture();
 
             rlImGuiBegin();
-                // ImGui::DockSpaceOverViewport();
+                ImGui::DockSpaceOverViewport();
                 DebugMenu();
             rlImGuiEnd();
 
@@ -171,6 +172,7 @@ public:
     AudioManager m_audioManager;
     CollisionSystem m_collisionSystem;
     AnimationSystem m_animationSystem;
+    SceneSerializer m_sceneSerializer;
 
 private:
     void DrawScaledRenderTexture() {
@@ -241,8 +243,7 @@ private:
     }
 
     void Render() {
-        EntityManager& ecs =
-            m_sceneManager.GetActiveScene().m_ecsManager;
+        EntityManager& ecs = m_sceneManager.GetActiveScene().m_ecsManager;
 
         for (Entity e : ecs.GetAllEntity()) {
             if (!ecs.HasComponent<TransformComponent>(e))
@@ -250,9 +251,8 @@ private:
 
             if (!ecs.HasComponent<RenderableComponent>(e))
                 continue;
-
-            const auto& render_e =
-                ecs.GetComponent<RenderableComponent>(e);
+            
+            const auto& render_e = ecs.GetComponent<RenderableComponent>(e);
 
             if (!render_e.is_visible)
                 continue;

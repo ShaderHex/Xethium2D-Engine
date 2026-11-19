@@ -6,6 +6,7 @@
 #include "raylib.h"
 #include "imgui.h"
 #include "rlImGui.h"
+#include "misc/cpp/imgui_stdlib.h"
 
 #include "XEngine/ECS/entityManager.h"
 #include "XEngine/ECS/componentStorage.h"
@@ -103,7 +104,6 @@ private:
             ecs.template AddComponent<TransformComponent>(entity, TransformComponent{});
             m_selectedEntity = entity;
             m_hasSelection = true;
-            m_texturePath[0] = '\0';
         }
 
         ImGui::Separator();
@@ -130,7 +130,6 @@ private:
             if (ImGui::Selectable(label.c_str(), selected)) {
                 m_selectedEntity = entity;
                 m_hasSelection = true;
-                m_texturePath[0] = '\0';
             }
         }
 
@@ -197,11 +196,16 @@ private:
         if (ecs.template HasComponent<SpriteComponent>(m_selectedEntity)) {
             if (DrawComponentHeader("Sprite")) {
                 auto& sprite = ecs.template GetComponent<SpriteComponent>(m_selectedEntity);
-                ImGui::Text("Texture: %d x %d", sprite.texture.width, sprite.texture.height);
-                ImGui::InputText("Texture path", m_texturePath, sizeof(m_texturePath));
-                if (ImGui::Button("Load / Replace Texture", ImVec2(-1.0f, 0.0f)) && m_texturePath[0] != '\0') {
-                    // Loading happens only when requested, never every editor frame.
-                    sprite.texture = scene.m_assetManager.LoadTexture(m_texturePath);
+                char buffer[256];
+                strncpy(buffer, sprite.texturePath.c_str(), sizeof(buffer));
+                buffer[sizeof(buffer) - 1] = '\0';
+
+                if (ImGui::InputText("Texture path", buffer, sizeof(buffer))) {
+                    sprite.texturePath = buffer;
+                }
+                ImGui::InputText("Texture path", &sprite.texturePath);
+                if (ImGui::Button("Load / Replace Texture", ImVec2(-1.0f, 0.0f)) && sprite.texturePath[0] != '\0') {
+                    sprite.texture = scene.m_assetManager.LoadTexture(sprite.texturePath.c_str());
                 }
                 ImGui::TextDisabled("Path is relative to the game's working directory.");
                 if (DrawRemoveComponentButton("Sprite")) {
@@ -353,7 +357,7 @@ private:
 private:
     Entity m_selectedEntity{};
     bool m_hasSelection = false;
-    char m_texturePath[512] = "";
+    // char m_texturePath[512] = "";
 };
 
 class EditorScene : public Scene {

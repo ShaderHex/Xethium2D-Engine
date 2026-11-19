@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include <string>
 
 struct TransformComponent {
     Vector2 position = { 0, 0 };
@@ -12,6 +13,7 @@ struct RenderableComponent {
 };
 
 struct SpriteComponent {
+    std::string texturePath;
     Texture2D texture;
     Color tint = WHITE;
 };
