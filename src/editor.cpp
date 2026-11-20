@@ -410,8 +410,12 @@ int main() {
     Game editor;
     editor.Init(winSpec);
 
-    EditorScene editorScene;
-    editor.GetSceneManager().SetScene(&editorScene);
+    // EditorScene editorScene;
+    Scene testScene;
+    editor.m_sceneSerializer.DeserializeScene(testScene, "Test.scene");
+    editor.GetSceneManager().SetScene(&testScene);
+
+
 
     editor.Run();
     return 0;
